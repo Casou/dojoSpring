@@ -11,7 +11,6 @@ Renvoyer la liste de tous les `Todo`
 _**Retour attendu** : Une liste de `Todo` avec tous leurs champs._
 
 _**Test unitaire**_
-
 ```java
 @Test
 public void findAll_shouldReturn2Records() throws Exception {
@@ -30,7 +29,6 @@ public void findAll_shouldReturn2Records() throws Exception {
     assertEquals("Todo 2", ((JSONObject) jsonArray.get(1)).get("text"));
 }
 ```
-    
 
 ##Step 1.2 (facultatif)
 Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
@@ -41,8 +39,15 @@ Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
 
 _**Retour attendu** : Une liste de `Todo` qui contiennent la lettre P._
 
-
-##Step x
+_**Test unitaire**_
+```java
+@Test
+public void findByTextContaining_shouldReturn3Records() {
+    assertEquals(3, [...].findByTextContaining("P").size());
+}
+```
+    
+##Step 2
 Renvoyer la liste de tous les `User` avec leurs `Todo`
 
 * Méthode : _GET_
