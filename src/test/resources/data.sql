@@ -16,3 +16,5 @@ INSERT INTO TODO (text, id_user) SELECT 'Sieste', id FROM USERS WHERE login = 'j
 INSERT INTO TODO (text, id_user) SELECT 'Baby', id FROM USERS WHERE login = 'jbricout';
 INSERT INTO TODO (text, id_user) SELECT 'Café', id FROM USERS WHERE login = 'jbricout';
 INSERT INTO TODO (text, id_user) SELECT 'Baby', id FROM USERS WHERE login = 'jbricout';
+
+INSERT INTO WebsiteUser(name, email) VALUES ('test', 'email@email.fr');

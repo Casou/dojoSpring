@@ -1,14 +1,23 @@
 # Dojo Spring
 
 
-##Step 1
+##Step 1.1
 Renvoyer la liste de tous les `Todo`
 
 * Méthode : _GET_
-* URL : _/todos_
+* URL : _/todo_
 * Paramètres : _Aucun_
 
-_**Retour attendu** : Une liste de `Todo` avec tous leurs champs._ 
+_**Retour attendu** : Une liste de `Todo` avec tous leurs champs._
+
+##Step 1.2 (facultatif)
+Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
+
+* Méthode : _GET_
+* URL : _/todo/search/findByTextContaining?text=P_ (Spring Data REST)
+* Paramètres : [ _text : string_ ]
+
+_**Retour attendu** : Une liste de `Todo` qui contiennent la lettre P._
 
 
 ##Step x
