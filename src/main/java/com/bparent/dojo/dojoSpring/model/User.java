@@ -8,16 +8,18 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "TODO")
+@Table(name="USERS")
 @Data
 @Builder
-public class Todo {
+public class User {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
-    @Column
-    private String text;
+    @Column private String login;
+    @Column private String name;
+    @Column private String firstName;
+    @Column private String job;
 
 }

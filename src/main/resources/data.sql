@@ -1,7 +1,7 @@
-INSERT INTO USERS(login, name, first_name, job) VALUES ('gpereira', 'Guillaume', 'Pereira', 'Scrum Master');
-INSERT INTO USERS(login, name, first_name, job) VALUES ('gvaneecloo', 'Guillaume', 'Vaneecloo', 'Architecte');
-INSERT INTO USERS(login, name, first_name, job) VALUES ('mbah', 'Bah', 'Madjou', 'Le nouveau');
-INSERT INTO USERS(login, name, first_name, job) VALUES ('jbricout', 'Jérémy', 'Bricout', 'Glandeur');
+INSERT INTO USERS(login, first_name, name, job) VALUES ('gpereira', 'Guillaume', 'Pereira', 'Scrum Master');
+INSERT INTO USERS(login, first_name, name, job) VALUES ('gvaneecloo', 'Guillaume', 'Vaneecloo', 'Architecte');
+INSERT INTO USERS(login, first_name, name, job) VALUES ('mbah', 'Bah', 'Madjou', 'Le nouveau');
+INSERT INTO USERS(login, first_name, name, job) VALUES ('jbricout', 'Jérémy', 'Bricout', 'Glandeur');
 
 INSERT INTO TODO (text, id_user) SELECT 'Préparer la prochaine rétro', id FROM USERS WHERE login = 'gpereira';
 INSERT INTO TODO (text, id_user) SELECT 'Préparer des ice breakers', id FROM USERS WHERE login = 'gpereira';

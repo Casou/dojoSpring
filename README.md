@@ -14,7 +14,7 @@ _**Test unitaire**_
 ```java
 @Test
 public void findAll_shouldReturn2Records() throws Exception {
-    // TODO
+    [...]
 
     MvcResult mvcResult = this.mockMvc.perform(get("/todo"))
             .andExpect(status().isOk())
@@ -46,24 +46,44 @@ public void findByTextContaining_shouldReturn3Records() {
     assertEquals(3, [...].findByTextContaining("P").size());
 }
 ```
-    
-##Step 2
-Renvoyer la liste de tous les `User` avec leurs `Todo`
+
+##Step 2.1
+Renvoyer la liste de tous les `User`
 
 * Méthode : _GET_
 * URL : _/users_
 * Paramètres : _Aucun_
 
-_**Retour attendu** : Une liste de `User` avec pour chacun, une liste de `Todo` avec tous leurs champs._
+_**Retour attendu** : Une liste de `User`_
 
-##Step x
-Renvoyer la liste de tous les `User` sans leurs `Todo`
+_**Test unitaire**_
+```java
+@Test
+public void findAll_shouldReturn2Records() throws Exception {
+    [...]
+
+    MvcResult mvcResult = this.mockMvc.perform(get("/todo"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    JSONArray jsonArray = new JSONArray(mvcResult.getResponse().getContentAsString());
+    assertEquals(2, jsonArray.length());
+
+    assertEquals(1, ((JSONObject) jsonArray.get(0)).get("id"));
+    assertEquals("User 1", ((JSONObject) jsonArray.get(0)).get("login"));
+    assertEquals(2, ((JSONObject) jsonArray.get(1)).get("id"));
+    assertEquals("User 2", ((JSONObject) jsonArray.get(1)).get("login"));
+}
+```
+
+##Step 2.2
+Renvoyer la liste de tous les `User` avec leurs `Todo`
 
 * Méthode : _GET_
-* URL : _/users/clean_
+* URL : _/users/complete_
 * Paramètres : _Aucun_
 
-_**Retour attendu** : Une liste de `User` avec tous leurs champs sauf les `Todo`_
+_**Retour attendu** : Une liste de `User` avec pour chacun, une liste de `Todo` avec tous leurs champs._
 
 ##Step x
 Changer d'état un `Todo` (complete / uncomplete)
