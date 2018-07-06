@@ -10,6 +10,28 @@ Renvoyer la liste de tous les `Todo`
 
 _**Retour attendu** : Une liste de `Todo` avec tous leurs champs._
 
+_**Test unitaire**_
+
+```java
+@Test
+public void findAll_shouldReturn2Records() throws Exception {
+    // TODO
+
+    MvcResult mvcResult = this.mockMvc.perform(get("/todo"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    JSONArray jsonArray = new JSONArray(mvcResult.getResponse().getContentAsString());
+    assertEquals(2, jsonArray.length());
+
+    assertEquals(1, ((JSONObject) jsonArray.get(0)).get("id"));
+    assertEquals("Todo 1", ((JSONObject) jsonArray.get(0)).get("text"));
+    assertEquals(2, ((JSONObject) jsonArray.get(1)).get("id"));
+    assertEquals("Todo 2", ((JSONObject) jsonArray.get(1)).get("text"));
+}
+```
+    
+
 ##Step 1.2 (facultatif)
 Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
 
