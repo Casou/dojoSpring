@@ -68,7 +68,9 @@ Affecter un `Todo` à un `User` (par défaut uncomplete)
         }
     }
     ```
-_**Retour attendu** : Statut OK (200)_
+_**Retour attendu** :_
+* _Statut OK (200)_
+* _Body : Todo avec un id_
     
 ##Step x.2
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas plus de 255 caractères
@@ -81,3 +83,25 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne p
 _**Retour attendu** : Statut Bad Request (400)_
 
 
+##Step x.1
+Supprimer un `Todo` d'un `User`
+
+* Méthode : _DELETE_
+* URL : _/users/todo_
+* Paramètres : JSON
+    ```
+    {
+        user : {
+            id : number
+        },
+        todo : {
+            id : number
+        }
+    }
+    ```
+_**Retour attendu** : Statut OK (200)_
+
+##Step x.2
+Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
+
+_**Retour attendu** : Statut Bad Request (400)_
