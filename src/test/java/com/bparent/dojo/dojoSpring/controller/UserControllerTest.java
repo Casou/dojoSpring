@@ -96,7 +96,7 @@ public class UserControllerTest {
                 )).build()
         ));
 
-        MvcResult mvcResult = this.mockMvc.perform(get("/users/complete"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/users/withTodo"))
                 .andExpect(status().isOk())
                 .andReturn();
 

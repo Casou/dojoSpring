@@ -35,7 +35,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/users/complete")
+    @GetMapping("/users/withTodo")
     public List<UserDto> findAllWithTodos() {
         return userRepository.findAll().stream()
                 .map(user -> new UserDto().toDto(user))

@@ -122,7 +122,7 @@ public void findAllAndReplaceName_shouldReturn2RecordsWithASpecificName() throws
 Renvoyer la liste de tous les `User` avec leurs `Todo`
 
 * Méthode : _GET_
-* URL : _/users/complete_
+* URL : _/users/withTodo_
 * Paramètres : _Aucun_
 
 ###Retour attendu
@@ -135,7 +135,7 @@ Renvoyer la liste de tous les `User` avec leurs `Todo`
 public void findAllWithTodos_shouldReturn2Records() throws Exception {
     [...]
 
-    MvcResult mvcResult = this.mockMvc.perform(get("/users/complete"))
+    MvcResult mvcResult = this.mockMvc.perform(get("/users/withTodo"))
             .andExpect(status().isOk())
             .andReturn();
 
@@ -156,7 +156,6 @@ public void findAllWithTodos_shouldReturn2Records() throws Exception {
     assertEquals(3, ((JSONObject) ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).get(0)).get("id"));
     assertEquals("Todo 3", ((JSONObject) ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).get(0)).get("text"));
 }
-
 ```
 
 ###Aide 
@@ -186,8 +185,7 @@ public class UserDto extends AbstractDto<User> {
 }
 ```
 
-
-##Step x
+##Step 3
 Changer d'état un `Todo` (complete / uncomplete)
 
 * Méthode : _PUT_
@@ -204,7 +202,46 @@ Changer d'état un `Todo` (complete / uncomplete)
 * Body : le `Todo` modifié
 
 
-##Step x.1
+###Test unitaire
+```java
+@Test
+public void completeTodo_shouldReturnADto() throws Exception {
+    [...]
+
+    MvcResult mvcResult = this.mockMvc.perform(post("/todo/complete")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(("{\"id\":1,\"complete\":true}"))
+            )
+            .andExpect(status().isOk())
+            .andReturn();
+
+    JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
+    assertEquals(1, jsonObject.get("id"));
+    assertEquals(true, jsonObject.get("complete"));
+}
+    
+===============================================
+
+@Test
+public void changeTodoStatus_shouldReturnTdoWithStatusChanged() {
+    [...] 
+    
+    TodoDto todoDto = [...];
+    assertEquals(true, todoDto.getComplete());
+}
+
+// Facultatif
+@Test(expected=NullPointerException.class)
+public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
+    [...]
+
+    [... - appel méthode];
+    fail("Should have raise an exception");
+}
+
+```
+
+##Step 4.1
 Affecter un `Todo` à un `User` (par défaut uncomplete)
 
 * Méthode : _POST_
@@ -225,7 +262,7 @@ Affecter un `Todo` à un `User` (par défaut uncomplete)
 * Body : Todo avec un id
 
 
-##Step x.2
+##Step 4.2
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas plus de 255 caractères
 
 ###Retour attendu
@@ -233,7 +270,7 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas p
 * Body : un message d'erreur explicite
 
 
-##Step x.3
+##Step 4.3
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne pas plus de 2 fois la lettre N et quatre fois la lettre P.
 
 ###Retour attendu
@@ -241,7 +278,7 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne p
 * Body : un message d'erreur explicite
 
 
-##Step x.1
+##Step 5.1
 Supprimer un `Todo` d'un `User`
 
 * Méthode : _DELETE_
@@ -261,7 +298,7 @@ Supprimer un `Todo` d'un `User`
 * Statut OK (200)
 
 
-##Step x.2
+##Step 5.2
 Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
 
 ###Retour attendu

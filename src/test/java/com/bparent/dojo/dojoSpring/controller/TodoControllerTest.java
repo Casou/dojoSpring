@@ -1,7 +1,9 @@
 package com.bparent.dojo.dojoSpring.controller;
 
+import com.bparent.dojo.dojoSpring.dto.TodoDto;
 import com.bparent.dojo.dojoSpring.model.Todo;
 import com.bparent.dojo.dojoSpring.repository.TodoRepository;
+import com.bparent.dojo.dojoSpring.service.TodoService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -10,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -19,6 +22,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TodoControllerTest {
@@ -28,6 +32,9 @@ public class TodoControllerTest {
 
     @Mock
     private TodoRepository todoRepository;
+
+    @Mock
+    private TodoService todoService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -56,6 +63,22 @@ public class TodoControllerTest {
         assertEquals("Todo 1", ((JSONObject) jsonArray.get(0)).get("text"));
         assertEquals(2, ((JSONObject) jsonArray.get(1)).get("id"));
         assertEquals("Todo 2", ((JSONObject) jsonArray.get(1)).get("text"));
+    }
+
+    @Test
+    public void completeTodo_shouldReturnADto() throws Exception {
+        when(todoService.changeTodoStatus(1, true)).thenReturn(TodoDto.builder().id(1).complete(true).build());
+
+        MvcResult mvcResult = this.mockMvc.perform(post("/todo/complete")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(("{\"id\":1,\"complete\":true}"))
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
+        assertEquals(1, jsonObject.get("id"));
+        assertEquals(true, jsonObject.get("complete"));
     }
 
 }
