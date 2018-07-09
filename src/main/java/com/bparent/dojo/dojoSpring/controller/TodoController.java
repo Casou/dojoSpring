@@ -6,10 +6,7 @@ import com.bparent.dojo.dojoSpring.model.Todo;
 import com.bparent.dojo.dojoSpring.repository.TodoRepository;
 import com.bparent.dojo.dojoSpring.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +27,7 @@ public class TodoController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/todo/complete")
+    @PutMapping("/todo/complete")
     public TodoDto completeTodo(@RequestBody Todo todo) {
         return todoService.changeTodoStatus(todo.getId(), todo.getComplete());
     }
