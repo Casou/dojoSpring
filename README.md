@@ -43,7 +43,7 @@ public void findAll_shouldReturn2Records() throws Exception {
     assertEquals("Todo 2", ((JSONObject) jsonArray.get(1)).get("text"));
 }
 ```
-<details>
+</details>
 
 ##  Step 1.2 (facultatif)
 Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
