@@ -1,5 +1,14 @@
 # Dojo Spring
+![](https://spring.io/img/spring-by-pivotal-9066b55828deb3c10e27e609af322c40.png)
 
+## Setup
+
+Cloner ce reposiitory et lancer `mvn clean install`.
+
+Lancer la classe `com.bparent.dojo.dojoSpring.DojoSpringApplication` en tant que Spring Boot.
+
+L'application se lance sur : [http://localhost:8080](`http://localhost:8080`). 
+Vous pouvez consulter la BDD sur : [http://localhost:8080/console](`http://localhost:8080/console`) 
 
 ## Step 1.1
 Renvoyer la liste de tous les `Todo`
@@ -11,6 +20,9 @@ Renvoyer la liste de tous les `Todo`
 ### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `Todo` avec tous leurs champs.
+
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -31,6 +43,7 @@ public void findAll_shouldReturn2Records() throws Exception {
     assertEquals("Todo 2", ((JSONObject) jsonArray.get(1)).get("text"));
 }
 ```
+<details>
 
 ##  Step 1.2 (facultatif)
 Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
@@ -424,3 +437,8 @@ Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
 
 ### Tests unitaires
 Partie à revoir pour mocker le validateur
+
+## Comptes
+> [basileparent.fr](http://www.basileparent.fr) &nbsp;&middot;&nbsp;
+> GitHub [@Casou](https://github.com/Casou) &nbsp;&middot;&nbsp;
+> Twitter [@basileparent](https://twitter.com/basileparent)
