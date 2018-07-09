@@ -1,6 +1,7 @@
 package com.bparent.dojo.dojoSpring.dto;
 
 import com.bparent.dojo.dojoSpring.model.Todo;
+import com.bparent.dojo.dojoSpring.validator.TodoTextConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class TodoDto extends AbstractDto<Todo> {
 
     private Integer id;
     @Size(max = 50, message = "The maximum length of a todo is 50 caracters.")
+    @TodoTextConstraint
     private String text;
     private Boolean complete;
 

@@ -339,11 +339,31 @@ public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception 
 
 
 ##Step 4.3
-Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne pas plus de 2 fois la lettre N et quatre fois la lettre P.
+Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne pas plus de 2 fois la lettre N et 4 fois la lettre P (majuscule uniquement).
 
 ###Retour attendu
 * Statut Bad Request (400)
 * Body : un message d'erreur explicite
+
+###Tests unitaires
+```java
+@Test
+public void addTodoToUser_shouldReturnAnErrorIfTooManyN() throws Exception {
+    MvcResult mvcResult = this.mockMvc.perform(post("/users/todo")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(("{\"id\":3,\"todos\":[{\"text\":\"Too many NNN\"}]}"))
+    )
+            .andExpect(status().isBadRequest())
+            .andReturn();
+
+    verifyZeroInteractions(userService);
+}
+```
+    
+###Aide
+```java
+org.springframework.util.StringUtils.countOccurrencesOf
+```
 
 
 ##Step 5.1

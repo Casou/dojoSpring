@@ -155,4 +155,16 @@ public class UserControllerTest {
         verifyZeroInteractions(userService);
     }
 
+    @Test
+    public void addTodoToUser_shouldReturnAnErrorIfTooManyN() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(post("/users/todo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(("{\"id\":3,\"todos\":[{\"text\":\"Too many NNN\"}]}"))
+        )
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        verifyZeroInteractions(userService);
+    }
+
 }
