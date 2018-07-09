@@ -484,5 +484,4 @@ Partie à revoir pour mocker le validateur
 
 > [basileparent.fr](http://www.basileparent.fr) &nbsp;&middot;&nbsp;
 > GitHub [@Casou](https://github.com/Casou) &nbsp;&middot;&nbsp;
-> <iframe src="https://ghbtns.com/github-btn.html?user=Casou&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 > [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40basileparent)](https://twitter.com/basileparent)
