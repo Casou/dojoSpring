@@ -58,5 +58,15 @@ public class UserController {
         return new ResponseEntity<>(userService.addTodoToUser(userDto.getId(), userDto.getTodos().get(0).getText()), HttpStatus.OK);
     }
 
+    @DeleteMapping("/users/todo")
+    public ResponseEntity<UserDto> deleteTodoFromUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        userService.deleteTodoFromUser(userDto.getId(), userDto.getTodos().get(0).getId());
+        return new ResponseEntity<>(HttpStatus.OK);    }
+
 
 }

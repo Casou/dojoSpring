@@ -319,7 +319,6 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas p
 
 ###Retour attendu
 * Statut Bad Request (400)
-* Body : un message d'erreur explicite
 
 
 ###Test unitaire
@@ -343,7 +342,6 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne p
 
 ###Retour attendu
 * Statut Bad Request (400)
-* Body : un message d'erreur explicite
 
 ###Tests unitaires
 ```java
@@ -385,6 +383,42 @@ Supprimer un `Todo` d'un `User`
 ###Retour attendu
 * Statut OK (200)
 
+###Tests unitaires
+```java
+@Test
+public void deleteTodoFromUser_shouldCallService() throws Exception {
+    MvcResult mvcResult = this.mockMvc.perform(delete("/users/todo")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(("{\"id\":3,\"todos\":[{\"id\":4}]}"))
+    )
+            .andExpect(status().isOk())
+            .andReturn();
+
+    verify(userService).deleteTodoFromUser(3, 4);
+    verifyNoMoreInteractions(userService);
+}
+==========================
+@Test
+public void addTodoToUser_shouldCallDbWithFilteredTodos() {
+    ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+    when(userRepository.findById(3)).thenReturn(Optional.of(
+            User.builder()
+                    .todos(new ArrayList<>(Arrays.asList(
+                            Todo.builder().id(1).build(),
+                            Todo.builder().id(2).build(),
+                            Todo.builder().id(3).build())))
+                    .build()
+    ));
+
+    userService.deleteTodoFromUser(3, 2);
+
+    verify(userRepository).save(userCaptor.capture());
+    User userSavedInDb = userCaptor.getValue();
+    assertEquals(2, userSavedInDb.getTodos().size());
+    assertTrue(userSavedInDb.getTodos().stream().anyMatch(todo -> todo.getId() == 1));
+    assertTrue(userSavedInDb.getTodos().stream().anyMatch(todo -> todo.getId() == 3));
+}
+```
 
 ##Step 5.2
 Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.

@@ -22,4 +22,11 @@ public class UserService {
         return new UserDto().toDto(user);
     }
 
+    public void deleteTodoFromUser(Integer idUser, Integer idTodo) {
+        User user = userRepository.findById(idUser).orElseThrow(() -> new NullPointerException("User not found for id : " + idUser));
+        user.getTodos().remove(user.getTodos().stream().filter(todo -> todo.getId().equals(idTodo)).findFirst().get());
+
+        userRepository.save(user);
+    }
+
 }

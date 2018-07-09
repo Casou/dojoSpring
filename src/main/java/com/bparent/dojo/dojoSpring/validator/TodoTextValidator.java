@@ -14,9 +14,9 @@ public class TodoTextValidator implements ConstraintValidator<TodoTextConstraint
     @Override
     public boolean isValid(String textField,
                            ConstraintValidatorContext cxt) {
-        return textField != null
-                && StringUtils.countOccurrencesOf(textField, "N") <= 2
-                && StringUtils.countOccurrencesOf(textField, "T") <= 4;
+        return textField == null ||
+                (StringUtils.countOccurrencesOf(textField, "N") <= 2
+                && StringUtils.countOccurrencesOf(textField, "T") <= 4);
     }
 
 }

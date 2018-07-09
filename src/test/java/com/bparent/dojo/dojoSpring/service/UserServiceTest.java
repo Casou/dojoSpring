@@ -59,4 +59,26 @@ public class UserServiceTest {
         fail("Should have raise an exception");
     }
 
+
+    @Test
+    public void addTodoToUser_shouldCallDbWithFilteredTodos() {
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        when(userRepository.findById(3)).thenReturn(Optional.of(
+                User.builder()
+                        .todos(new ArrayList<>(Arrays.asList(
+                                Todo.builder().id(1).build(),
+                                Todo.builder().id(2).build(),
+                                Todo.builder().id(3).build())))
+                        .build()
+        ));
+
+        userService.deleteTodoFromUser(3, 2);
+
+        verify(userRepository).save(userCaptor.capture());
+        User userSavedInDb = userCaptor.getValue();
+        assertEquals(2, userSavedInDb.getTodos().size());
+        assertTrue(userSavedInDb.getTodos().stream().anyMatch(todo -> todo.getId() == 1));
+        assertTrue(userSavedInDb.getTodos().stream().anyMatch(todo -> todo.getId() == 3));
+    }
+
 }
