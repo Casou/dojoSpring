@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TodoControllerTest {
@@ -69,7 +70,7 @@ public class TodoControllerTest {
     public void completeTodo_shouldReturnADto() throws Exception {
         when(todoService.changeTodoStatus(1, true)).thenReturn(TodoDto.builder().id(1).complete(true).build());
 
-        MvcResult mvcResult = this.mockMvc.perform(post("/todo/complete")
+        MvcResult mvcResult = this.mockMvc.perform(put("/todo/complete")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(("{\"id\":1,\"complete\":true}"))
                 )

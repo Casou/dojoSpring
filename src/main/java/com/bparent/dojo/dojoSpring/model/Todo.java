@@ -25,7 +25,8 @@ public class Todo {
     private String text;
 
     @Column
-    private Boolean complete;
+    @Builder.Default
+    private Boolean complete = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)

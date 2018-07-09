@@ -6,6 +6,7 @@ import com.bparent.dojo.dojoSpring.model.Todo;
 import com.bparent.dojo.dojoSpring.model.User;
 import com.bparent.dojo.dojoSpring.repository.TodoRepository;
 import com.bparent.dojo.dojoSpring.repository.UserRepository;
+import com.bparent.dojo.dojoSpring.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,12 +26,16 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private UserRepository userRepository;
@@ -116,6 +122,22 @@ public class UserControllerTest {
         assertEquals(1, ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).length());
         assertEquals(3, ((JSONObject) ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).get(0)).get("id"));
         assertEquals("Todo 3", ((JSONObject) ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).get(0)).get("text"));
+    }
+
+
+    @Test
+    public void addTodoToUser_shouldReturnAUserDtoReturnedByTheService() throws Exception {
+        when(userService.addTodoToUser(3, "New Todo")).thenReturn(UserDto.builder().id(3).build());
+
+        MvcResult mvcResult = this.mockMvc.perform(post("/users/todo")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(("{\"id\":3,\"todos\":[{\"text\":\"New Todo\"}]}"))
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
+        assertEquals(3, jsonObject.get("id"));
     }
 
 }
