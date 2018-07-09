@@ -1,9 +1,11 @@
 package com.bparent.dojo.dojoSpring.controller;
 
 import com.bparent.dojo.dojoSpring.dto.UserDto;
+import com.bparent.dojo.dojoSpring.dto.UserTodoToDeleteDto;
 import com.bparent.dojo.dojoSpring.model.User;
 import com.bparent.dojo.dojoSpring.repository.UserRepository;
 import com.bparent.dojo.dojoSpring.service.UserService;
+import com.bparent.dojo.dojoSpring.validator.UserTodoLinkConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -59,14 +61,15 @@ public class UserController {
     }
 
     @DeleteMapping("/users/todo")
-    public ResponseEntity<UserDto> deleteTodoFromUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
+    public ResponseEntity<UserDto> deleteTodoFromUser(@Valid @RequestBody UserTodoToDeleteDto userDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        userService.deleteTodoFromUser(userDto.getId(), userDto.getTodos().get(0).getId());
-        return new ResponseEntity<>(HttpStatus.OK);    }
+        userService.deleteTodoFromUser(userDto.getIdUser(), userDto.getIdTodo());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

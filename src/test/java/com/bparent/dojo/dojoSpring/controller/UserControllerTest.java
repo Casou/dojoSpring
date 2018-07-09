@@ -1,6 +1,5 @@
 package com.bparent.dojo.dojoSpring.controller;
 
-import com.bparent.dojo.dojoSpring.dto.TodoDto;
 import com.bparent.dojo.dojoSpring.dto.UserDto;
 import com.bparent.dojo.dojoSpring.model.Todo;
 import com.bparent.dojo.dojoSpring.model.User;
@@ -10,24 +9,28 @@ import com.bparent.dojo.dojoSpring.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserControllerTest {
@@ -40,6 +43,9 @@ public class UserControllerTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private TodoRepository todoRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -168,11 +174,16 @@ public class UserControllerTest {
         verifyZeroInteractions(userService);
     }
 
+    @Ignore
     @Test
     public void deleteTodoFromUser_shouldCallService() throws Exception {
+        when(todoRepository.findById(4)).thenReturn(Optional.of(Todo.builder()
+                .user(User.builder().id(3).build())
+                .build()));
+
         MvcResult mvcResult = this.mockMvc.perform(delete("/users/todo")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(("{\"id\":3,\"todos\":[{\"id\":4}]}"))
+                .content(("{\"idUser\":3,\"idTodo\":4}"))
         )
                 .andExpect(status().isOk())
                 .andReturn();

@@ -372,12 +372,8 @@ Supprimer un `Todo` d'un `User`
 * Paramètres : JSON
     ```
     {
-        user : {
-            id : number
-        },
-        todo : {
-            id : number
-        }
+        idUser : number,
+        idTodo : number 
     }
     ```
 ### Retour attendu
@@ -389,7 +385,7 @@ Supprimer un `Todo` d'un `User`
 public void deleteTodoFromUser_shouldCallService() throws Exception {
     MvcResult mvcResult = this.mockMvc.perform(delete("/users/todo")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(("{\"id\":3,\"todos\":[{\"id\":4}]}"))
+            .content(("{\"idUser\":3,\"idTodo\":4}"))
     )
             .andExpect(status().isOk())
             .andReturn();
@@ -424,5 +420,7 @@ public void addTodoToUser_shouldCallDbWithFilteredTodos() {
 Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
 
 ### Retour attendu
-* Statut Bad Request (400)
-* Body : un message d'erreur explicite
+* Statut Forbidden (403)
+
+### Tests unitaires
+Partie à revoir pour mocker le validateur
