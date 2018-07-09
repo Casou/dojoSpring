@@ -277,6 +277,9 @@ public void addTodoToUser_shouldReturnAUserDtoReturnedByTheService() throws Exce
 
     JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
     assertEquals(3, jsonObject.get("id"));
+    
+    verify(userService).addTodoToUser(3, "New Todo");
+    verifyNoMoreInteractions(userService);
 }
 ===============================================
 
@@ -312,11 +315,27 @@ public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
 
 
 ##Step 4.2
-Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas plus de 255 caractères
+Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas plus de 50 caractères
 
 ###Retour attendu
 * Statut Bad Request (400)
 * Body : un message d'erreur explicite
+
+
+###Test unitaire
+```java
+@Test
+public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception {
+    MvcResult mvcResult = this.mockMvc.perform(post("/users/todo")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(("{\"id\":3,\"todos\":[{\"text\":\"Un meessage de plus de 50 caractères devrait faire se déclencher une exception dans le controller\"}]}"))
+    )
+            .andExpect(status().isBadRequest())
+            .andReturn();
+
+    verifyZeroInteractions(userService);
+}
+```
 
 
 ##Step 4.3

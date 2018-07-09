@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -138,6 +138,21 @@ public class UserControllerTest {
 
         JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
         assertEquals(3, jsonObject.get("id"));
+
+        verify(userService).addTodoToUser(3, "New Todo");
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(post("/users/todo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(("{\"id\":3,\"todos\":[{\"text\":\"Un meessage de plus de 50 caractères devrait faire se déclencher une exception dans le controller\"}]}"))
+        )
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        verifyZeroInteractions(userService);
     }
 
 }
