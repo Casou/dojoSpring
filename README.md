@@ -478,7 +478,11 @@ Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
 ### Tests unitaires
 Partie à revoir pour mocker le validateur
 
-## Comptes
+## Licences
+
+![](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square)
+
 > [basileparent.fr](http://www.basileparent.fr) &nbsp;&middot;&nbsp;
 > GitHub [@Casou](https://github.com/Casou) &nbsp;&middot;&nbsp;
-> Twitter [@basileparent](https://twitter.com/basileparent)
+> <iframe src="https://ghbtns.com/github-btn.html?user=Casou&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+> [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40basileparent)](https://twitter.com/basileparent)
