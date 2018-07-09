@@ -59,6 +59,9 @@ Utiliser Spring Data REST uniquement (pas de Controller)
 * Statut : OK (200)
 * Body : Une liste de `Todo` qui contiennent la lettre P.
 
+<details>
+<summary>Test unitaire</summary>
+
 ### Test unitaire
 ```java
 @Test
@@ -66,6 +69,7 @@ public void findByTextContaining_shouldReturn3Records() {
     assertEquals(3, [...].findByTextContaining("P").size());
 }
 ```
+</details>
 
 ## Step 2.1
 Renvoyer la liste de tous les `User`
@@ -77,6 +81,9 @@ Renvoyer la liste de tous les `User`
 ### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User`
+
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -97,6 +104,7 @@ public void findAll_shouldReturn2Records() throws Exception {
     assertEquals("User 2", ((JSONObject) jsonArray.get(1)).get("login"));
 }
 ```
+</details>
 
 ## Step 2.2
 Renvoyer la liste de tous les `User` dont le nom de famille aura été remplacé par le paramètre
@@ -110,6 +118,9 @@ Ajouter `@Transactional` sur le controller.
 ### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User` dont le nom a été remplacé
+
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -130,6 +141,7 @@ public void findAllAndReplaceName_shouldReturn2RecordsWithASpecificName() throws
     assertEquals("toto", ((JSONObject) jsonArray.get(1)).get("name"));
 }
 ```
+</details>
 
 ## Step 2.3
 Renvoyer la liste de tous les `User` avec leurs `Todo`
@@ -141,6 +153,9 @@ Renvoyer la liste de tous les `User` avec leurs `Todo`
 ### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User` avec pour chacun, une liste de `Todo` avec tous leurs champs.
+
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -170,6 +185,10 @@ public void findAllWithTodos_shouldReturn2Records() throws Exception {
     assertEquals("Todo 3", ((JSONObject) ((JSONArray) ((JSONObject) jsonArray.get(1)).get("todos")).get(0)).get("text"));
 }
 ```
+</details>
+
+<details>
+<summary>Aide</summary>
 
 ### Aide 
 ```java
@@ -197,6 +216,7 @@ public class UserDto extends AbstractDto<User> {
 
 }
 ```
+</details>
 
 ## Step 3
 Changer d'état un `Todo` (complete / uncomplete)
@@ -214,6 +234,8 @@ Changer d'état un `Todo` (complete / uncomplete)
 * Statut OK (200)
 * Body : le `Todo` modifié
 
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -251,8 +273,8 @@ public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
     [... - appel méthode];
     fail("Should have raise an exception");
 }
-
 ```
+</details>
 
 ## Step 4.1
 Affecter un `Todo` à un `User` (par défaut uncomplete)
@@ -270,10 +292,13 @@ Affecter un `Todo` à un `User` (par défaut uncomplete)
         }
     }
     ```
+    
 ### Retour attendu
 * Statut OK (200)
 * Body : Le `User` avec tous ses `Todo` (dont le nouveau qui a un id et un status complete à FALSE)
 
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -323,8 +348,8 @@ public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
     userService.addTodoToUser(3, "New Todo");
     fail("Should have raise an exception");
 }
-
 ```
+</details>
 
 
 ## Step 4.2
@@ -333,6 +358,8 @@ Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas p
 ### Retour attendu
 * Statut Bad Request (400)
 
+<details>
+<summary>Test unitaire</summary>
 
 ### Test unitaire
 ```java
@@ -348,13 +375,16 @@ public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception 
     verifyZeroInteractions(userService);
 }
 ```
-
+</details>
 
 ## Step 4.3
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne pas plus de 2 fois la lettre N et 4 fois la lettre P (majuscule uniquement).
 
 ### Retour attendu
 * Statut Bad Request (400)
+
+<details>
+<summary>Test unitaire</summary>
 
 ### Tests unitaires
 ```java
@@ -370,12 +400,16 @@ public void addTodoToUser_shouldReturnAnErrorIfTooManyN() throws Exception {
     verifyZeroInteractions(userService);
 }
 ```
+</details>
     
+<details>
+<summary>Aide</summary>
+
 ### Aide
 ```java
 org.springframework.util.StringUtils.countOccurrencesOf
 ```
-
+</details>
 
 ## Step 5.1
 Supprimer un `Todo` d'un `User`
@@ -392,6 +426,9 @@ Supprimer un `Todo` d'un `User`
 ### Retour attendu
 * Statut OK (200)
 
+<details>
+<summary>Test unitaire</summary>
+
 ### Tests unitaires
 ```java
 @Test
@@ -406,7 +443,9 @@ public void deleteTodoFromUser_shouldCallService() throws Exception {
     verify(userService).deleteTodoFromUser(3, 4);
     verifyNoMoreInteractions(userService);
 }
+
 ==========================
+
 @Test
 public void addTodoToUser_shouldCallDbWithFilteredTodos() {
     ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -428,6 +467,7 @@ public void addTodoToUser_shouldCallDbWithFilteredTodos() {
     assertTrue(userSavedInDb.getTodos().stream().anyMatch(todo -> todo.getId() == 3));
 }
 ```
+</details>
 
 ## Step 5.2
 Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
