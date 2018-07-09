@@ -1,18 +1,18 @@
 # Dojo Spring
 
 
-##Step 1.1
+## Step 1.1
 Renvoyer la liste de tous les `Todo`
 
 * Méthode : _GET_
 * URL : _/todo_
 * Paramètres : _Aucun_
 
-###Retour attendu
+### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `Todo` avec tous leurs champs.
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void findAll_shouldReturn2Records() throws Exception {
@@ -32,21 +32,21 @@ public void findAll_shouldReturn2Records() throws Exception {
 }
 ```
 
-##Step 1.2 (facultatif)
+##  Step 1.2 (facultatif)
 Renvoyer la liste de tous les `Todo` dont le texte contient le paramètre
 
 * Méthode : _GET_
 * URL : _/todo/search/findByTextContaining?text=P_
 * Paramètres : [ _text : string_ 
 
-###Contrainte
+### Contrainte
 Utiliser Spring Data REST uniquement (pas de Controller)
 
-###Retour attendu
+### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `Todo` qui contiennent la lettre P.
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void findByTextContaining_shouldReturn3Records() {
@@ -54,18 +54,18 @@ public void findByTextContaining_shouldReturn3Records() {
 }
 ```
 
-##Step 2.1
+## Step 2.1
 Renvoyer la liste de tous les `User`
 
 * Méthode : _GET_
 * URL : _/users_
 * Paramètres : _Aucun_
 
-###Retour attendu
+### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User`
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void findAll_shouldReturn2Records() throws Exception {
@@ -85,20 +85,20 @@ public void findAll_shouldReturn2Records() throws Exception {
 }
 ```
 
-##Step 2.2
+## Step 2.2
 Renvoyer la liste de tous les `User` dont le nom de famille aura été remplacé par le paramètre
 * Méthode : _GET_
 * URL : _/users/name/{name}_
 * Paramètres : [ _name : string_ ]
 
-###Contrainte
+### Contrainte
 Ajouter `@Transactional` sur le controller.
 
-###Retour attendu
+### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User` dont le nom a été remplacé
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void findAllAndReplaceName_shouldReturn2RecordsWithASpecificName() throws Exception {
@@ -118,18 +118,18 @@ public void findAllAndReplaceName_shouldReturn2RecordsWithASpecificName() throws
 }
 ```
 
-##Step 2.3
+## Step 2.3
 Renvoyer la liste de tous les `User` avec leurs `Todo`
 
 * Méthode : _GET_
 * URL : _/users/withTodo_
 * Paramètres : _Aucun_
 
-###Retour attendu
+### Retour attendu
 * Statut : OK (200)
 * Body : Une liste de `User` avec pour chacun, une liste de `Todo` avec tous leurs champs.
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void findAllWithTodos_shouldReturn2Records() throws Exception {
@@ -158,7 +158,7 @@ public void findAllWithTodos_shouldReturn2Records() throws Exception {
 }
 ```
 
-###Aide 
+### Aide 
 ```java
 import org.modelmapper.ModelMapper;
 
@@ -185,7 +185,7 @@ public class UserDto extends AbstractDto<User> {
 }
 ```
 
-##Step 3
+## Step 3
 Changer d'état un `Todo` (complete / uncomplete)
 
 * Méthode : _PUT_
@@ -197,12 +197,12 @@ Changer d'état un `Todo` (complete / uncomplete)
         complete : boolean
     }
     ```
-###Retour attendu
+### Retour attendu
 * Statut OK (200)
 * Body : le `Todo` modifié
 
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void completeTodo_shouldReturnADto() throws Exception {
@@ -241,7 +241,7 @@ public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
 
 ```
 
-##Step 4.1
+## Step 4.1
 Affecter un `Todo` à un `User` (par défaut uncomplete)
 
 * Méthode : _POST_
@@ -257,12 +257,12 @@ Affecter un `Todo` à un `User` (par défaut uncomplete)
         }
     }
     ```
-###Retour attendu
+### Retour attendu
 * Statut OK (200)
 * Body : Le `User` avec tous ses `Todo` (dont le nouveau qui a un id et un status complete à FALSE)
 
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void addTodoToUser_shouldReturnAUserDtoReturnedByTheService() throws Exception {
@@ -314,14 +314,14 @@ public void changeTodoStatus_shouldThrowAnExceptionIfIdNotFound() {
 ```
 
 
-##Step 4.2
+## Step 4.2
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne fasse pas plus de 50 caractères
 
-###Retour attendu
+### Retour attendu
 * Statut Bad Request (400)
 
 
-###Test unitaire
+### Test unitaire
 ```java
 @Test
 public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception {
@@ -337,13 +337,13 @@ public void addTodoToUser_shouldReturnAnErrorIfTextIsTooLong() throws Exception 
 ```
 
 
-##Step 4.3
+## Step 4.3
 Avant d'affecter un `Todo` à un `User`, on vérifie que le texte ne contienne pas plus de 2 fois la lettre N et 4 fois la lettre P (majuscule uniquement).
 
-###Retour attendu
+### Retour attendu
 * Statut Bad Request (400)
 
-###Tests unitaires
+### Tests unitaires
 ```java
 @Test
 public void addTodoToUser_shouldReturnAnErrorIfTooManyN() throws Exception {
@@ -358,13 +358,13 @@ public void addTodoToUser_shouldReturnAnErrorIfTooManyN() throws Exception {
 }
 ```
     
-###Aide
+### Aide
 ```java
 org.springframework.util.StringUtils.countOccurrencesOf
 ```
 
 
-##Step 5.1
+## Step 5.1
 Supprimer un `Todo` d'un `User`
 
 * Méthode : _DELETE_
@@ -380,10 +380,10 @@ Supprimer un `Todo` d'un `User`
         }
     }
     ```
-###Retour attendu
+### Retour attendu
 * Statut OK (200)
 
-###Tests unitaires
+### Tests unitaires
 ```java
 @Test
 public void deleteTodoFromUser_shouldCallService() throws Exception {
@@ -420,9 +420,9 @@ public void addTodoToUser_shouldCallDbWithFilteredTodos() {
 }
 ```
 
-##Step 5.2
+## Step 5.2
 Avant de supprimer un `Todo` d'un `User`, on vérifie qu'il lui appartient.
 
-###Retour attendu
+### Retour attendu
 * Statut Bad Request (400)
 * Body : un message d'erreur explicite
