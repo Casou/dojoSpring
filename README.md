@@ -1,6 +1,16 @@
 # Dojo Spring
 ![](https://spring.io/img/spring-by-pivotal-9066b55828deb3c10e27e609af322c40.png)
 
+Le but de cet exercice est de s'entraîner sur un cas simple aux bonnes pratiques de Spring / MVC / Data / Spring Validation mais aussi de pratiquer Java 8 et le développement en TDD.
+
+Il ne concerne que la partie back d'une application. La partie front est censée répondre aux différents contrats d'interface définis dans chacune des étapes de l'énoncé.  
+
+## Consignes
+* Tout le code produit doit être testé unitairement.
+* Ne regardez les sections Tests unitaires que pour vérifier / compléter vos propres tests.
+* Si vous faites ce dojo à plusieurs (fortement conseillé), le faire en mob programming.
+* Mettez en place toutes les bonnes pratiques (découpage, règle de nommage, etc.) que vous mettriez en place pour un "vrai" projet.
+
 ## Setup
 
 Cloner ce reposiitory et lancer `mvn clean install`.
@@ -8,7 +18,8 @@ Cloner ce reposiitory et lancer `mvn clean install`.
 Lancer la classe `com.bparent.dojo.dojoSpring.DojoSpringApplication` en tant que Spring Boot.
 
 L'application se lance sur : [http://localhost:8080](`http://localhost:8080`). 
-Vous pouvez consulter la BDD sur : [http://localhost:8080/console](`http://localhost:8080/console`) 
+
+Vous pouvez consulter la BDD sur : [http://localhost:8080/console](`http://localhost:8080/console`) (elle est remise à son état initial à chaque démarrage) 
 
 ## Step 1.1
 Renvoyer la liste de tous les `Todo`
